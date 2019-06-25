@@ -1,0 +1,14 @@
+{% block content %}
+  {
+  "type" : "{{ lo.lotype }}",
+  "chapters" : [
+  {% for chapter in lo.chapters %}
+    {
+    "title": "{{ chapter.title }}",
+    "shortTitle": "{{ chapter.shortTitle }}",
+    "contentMd" : {{  chapter.contentMd }}
+    }{% if (not loop.last) %},{% endif %}
+  {% endfor %}
+  ]
+  }
+{% endblock %}
