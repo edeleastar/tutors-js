@@ -2,7 +2,7 @@ import { LearningObject } from './learningobjects';
 import { Topic } from './topic';
 import * as sh from 'shelljs';
 import { copyFileToFolder } from '../utils/futils';
-import { publishLos } from './loutils';
+import { publishLos } from '../utils/loutils';
 
 export class Unit extends Topic {
   standardLos: Array<LearningObject>;

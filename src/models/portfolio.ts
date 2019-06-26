@@ -2,7 +2,7 @@ import * as fs from 'fs';
 import * as sh from 'shelljs';
 import * as yaml from 'yamljs';
 import { CompositeLearningObject, LearningObject } from './learningobjects';
-import { publishLos, publishTemplate, reapLos } from './loutils';
+import { publishLos, publishTemplate, reapLos } from '../utils/loutils';
 import { copyFileToFolder, getCurrentDirectory, readPropsFromTree, verifyFolder } from '../utils/futils';
 import { Course } from './course';
 import { CommandOptions } from '../controllers/commands';

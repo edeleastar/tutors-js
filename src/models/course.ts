@@ -1,9 +1,8 @@
 import { CompositeLearningObject, LearningObject } from './learningobjects';
 import { Topic } from './topic';
-import { publishLos, reapLos } from './loutils';
+import { publishLos, reapLos } from '../utils/loutils';
 import { copyFileToFolder, getCurrentDirectory, getIgnoreList, writeFile } from '../utils/futils';
 import { CommandOptions } from '../controllers/commands';
-import { JsonView } from '../viewskit/jsonview';
 const nunjucks = require('nunjucks');
 
 export class Course extends CompositeLearningObject {
@@ -43,13 +42,22 @@ export class Course extends CompositeLearningObject {
     copyFileToFolder(this.img!, path);
     publishLos(path, this.los);
     writeFile(path, 'tutors.json', nunjucks.render('course-json.njk', { lo: this }));
-    const jsonView = new JsonView(path, this);
-    jsonView.publish();
-    if (this.properties!!.favicon) {
-      copyFileToFolder(this.properties!!.favicon, path);
-    }
-    if (this.properties!!.crest) {
-      copyFileToFolder(this.properties!!.crest, path);
-    }
+
+    let courseUrl = this.course!.properties!.courseurl;
+    let courseJson: any = {};
+    this.toJson(courseUrl, courseJson);
+    writeFile(path, 'course.json', JSON.stringify(courseJson));
+  }
+
+  toJson(url: string, jsonObj: any) {;
+    let baseCourseUrl = url.substring(url.indexOf('//') + 2);
+    super.toJson(url, jsonObj);
+
+    jsonObj.los = [];
+    this.los.forEach(lo => {
+      let topicObj: any = {};
+      lo.toJson(baseCourseUrl, topicObj);
+      jsonObj.los.push(topicObj);
+    });
   }
 }

@@ -3,7 +3,7 @@ import * as fs from 'fs';
 const glob = require('glob');
 import { LearningObject } from './learningobjects';
 import * as path from 'path';
-import { copyResource } from './loutils';
+import { copyResource } from '../utils/loutils';
 import { readFile } from '../utils/futils';
 
 export abstract class DiscreteLearningObject extends LearningObject {
@@ -27,7 +27,6 @@ export abstract class DiscreteLearningObject extends LearningObject {
 }
 
 export class Talk extends DiscreteLearningObject {
-
   constructor(parent: LearningObject) {
     super(parent);
     this.lotype = 'talk';
@@ -39,7 +38,6 @@ export class Talk extends DiscreteLearningObject {
 }
 
 export class PanelTalk extends DiscreteLearningObject {
-
   constructor(parent: LearningObject) {
     super(parent);
     this.lotype = 'paneltalk';

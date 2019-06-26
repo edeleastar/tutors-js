@@ -60,15 +60,8 @@ export class JsonView {
 
   publish(): void {
     let courseUrl = this.course!.properties!.courseurl;
-    let baseCourseUrl = courseUrl.substring(courseUrl.indexOf('//') + 2);
-
     let courseJson: any = {};
-    this.base(courseJson, this.course, courseUrl);
-    courseJson.los = [];
-    this.course.los.forEach(lo => {
-      courseJson.los.push(this.topic(lo as Topic, baseCourseUrl));
-    });
-
+    this.course.toJson(courseUrl, courseJson);
     writeFile(this.path, 'course.json', JSON.stringify(courseJson));
   }
 }

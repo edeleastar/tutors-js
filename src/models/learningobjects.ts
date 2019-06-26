@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { getHeader, getImageFile, getParentFolder, readPropsFromTree, withoutHeader } from '../utils/futils';
-import { Properties } from './properties';
+import { Properties } from '../utils/properties';
 
 export abstract class LearningObject {
   parent?: LearningObject;
@@ -53,6 +53,18 @@ export abstract class LearningObject {
   }
 
   abstract publish(path: string): void;
+
+  toJson (url: string, jsonObj: any) {
+    jsonObj.properties = this.properties;
+    jsonObj.title = this.title;
+    jsonObj.type = this.lotype;
+    jsonObj.summary = this.objectivesMd;
+    jsonObj.img = `https://${url}/${this.img}`;
+    if (jsonObj.videoid) {
+      jsonObj.video = `#video/${url}/${this.videoid}`;
+    }
+    jsonObj.id = this.folder;
+  }
 }
 
 export abstract class CompositeLearningObject extends LearningObject {

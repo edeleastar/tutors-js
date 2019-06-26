@@ -1,8 +1,9 @@
 import * as sh from 'shelljs';
 import { CompositeLearningObject, LearningObject } from './learningobjects';
-import { publishLos, reapLos } from './loutils';
+import { publishLos, reapLos } from '../utils/loutils';
 import { copyFileToFolder } from '../utils/futils';
 import * as fs from 'fs';
+import { Unit } from './unit';
 
 export class Topic extends CompositeLearningObject {
   units: Array<LearningObject>;
@@ -44,5 +45,16 @@ export class Topic extends CompositeLearningObject {
 
     publishLos(topicPath, this.los);
     sh.cd('..');
+  }
+
+  toJson (url: string, jsonObj: any) {
+    super.toJson(url, jsonObj);
+    jsonObj.los = [];
+    this.los.forEach(lo => {
+      let loJson: any = {};
+      lo.toJson( url + this.folder + '/' + lo.folder, loJson,)
+      jsonObj.los.push(loJson);
+    });
+
   }
 }

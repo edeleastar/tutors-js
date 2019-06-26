@@ -3,14 +3,14 @@ import * as fs from 'fs';
 const glob = require('glob');
 const nodePath = require('path');
 import * as sh from 'shelljs';
-import { LearningObject } from './learningobjects';
-import { Course } from './course';
-import { Topic } from './topic';
-import { Book } from './book';
-import { writeFile } from '../utils/futils';
-import { Archive, PanelTalk, Reference, Talk } from './discrete-learningobject';
-import { Git, PanelVideo, Video, Web } from './web-learning-object';
-import { Unit } from './unit';
+import { LearningObject } from '../models/learningobjects';
+import { Course } from '../models/course';
+import { Topic } from '../models/topic';
+import { Book } from '../models/book';
+import { writeFile } from './futils';
+import { Archive, PanelTalk, Reference, Talk } from '../models/discrete-learningobject';
+import { Git, PanelVideo, Video, Web } from '../models/web-learning-object';
+import { Unit } from '../models/unit';
 
 const nunjucks = require('nunjucks');
 

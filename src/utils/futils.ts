@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as sh from 'shelljs';
-import { Properties } from '../models/properties';
+import { Properties } from './properties';
 import * as yaml from 'yamljs';
 
 const _ = require('lodash');

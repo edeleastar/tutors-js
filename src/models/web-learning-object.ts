@@ -1,4 +1,4 @@
-import { copyResource } from './loutils';
+import { copyResource } from '../utils/loutils';
 import { LearningObject } from './learningobjects';
 import { readFile } from '../utils/futils';
 import * as fs from 'fs';
