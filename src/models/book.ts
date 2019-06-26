@@ -16,7 +16,6 @@ export class Chapter {
 export class Book extends LearningObject {
   directories: Array<string> = [];
   chapters: Array<Chapter> = [];
-  videoid = 'none';
 
   constructor(parent: LearningObject) {
     super(parent);

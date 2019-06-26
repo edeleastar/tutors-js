@@ -9,6 +9,7 @@ export abstract class LearningObject {
   lotype: string;
   title?: string;
   img?: string;
+  videoid? : string;
   link?: string;
   folder?: string;
   parentFolder?: string;
@@ -27,15 +28,16 @@ export abstract class LearningObject {
     this.folder = path.basename(process.cwd());
     this.parentFolder = getParentFolder();
     this.img = getImageFile(pattern);
-    this.properties = readPropsFromTree();
-    if (this.properties.courseurl) {
-      let domain = this.properties.courseurl.substring(this.properties.courseurl.indexOf('//') + 2);
-      this.properties.basecourseurl = domain;
-    }
+    //this.properties = readPropsFromTree();
+    // if (this.properties.courseurl) {
+    //   let domain = this.properties.courseurl.substring(this.properties.courseurl.indexOf('//') + 2);
+    //   this.properties.basecourseurl = domain;
+    // }
     if (fs.existsSync('properties.yaml')) {
-      this.jsonProperties = JSON.stringify(this.properties);
+      this.properties = readPropsFromTree();
+      //this.jsonProperties = JSON.stringify(this.properties);
     } else {
-      this.jsonProperties = '{}';
+     // this.jsonProperties = '{}';
     }
     if (fs.existsSync(pattern + '.md')) {
       this.title = getHeader(pattern + '.md');

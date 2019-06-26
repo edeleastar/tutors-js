@@ -27,7 +27,6 @@ export abstract class DiscreteLearningObject extends LearningObject {
 }
 
 export class Talk extends DiscreteLearningObject {
-  videoid = 'none';
 
   constructor(parent: LearningObject) {
     super(parent);
@@ -40,7 +39,6 @@ export class Talk extends DiscreteLearningObject {
 }
 
 export class PanelTalk extends DiscreteLearningObject {
-  videoid = 'none';
 
   constructor(parent: LearningObject) {
     super(parent);

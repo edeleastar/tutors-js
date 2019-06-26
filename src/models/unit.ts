@@ -20,7 +20,7 @@ export class Unit extends Topic {
     const topicPath = path + '/' + this.folder;
     copyFileToFolder(this.img!, topicPath);
 
-    this.topicUrl = this.properties!.courseurl.substring(5) + '/' + this.folder;
+    //this.topicUrl = this.properties!.courseurl.substring(5) + '/' + this.folder;
     publishLos(topicPath, this.los);
     sh.cd('..');
   }
