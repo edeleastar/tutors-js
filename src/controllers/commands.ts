@@ -34,9 +34,7 @@ export class Commands {
       .arguments('<file>')
       .version(require('../../package.json').version)
       .option('-p, --private', 'Generate full private site')
-      .option('-u, --uikit', 'Generate UIKit based site (experimental)')
       .option('-n, --new', 'Create a template course')
-      .option('-j, --json', 'Generate json only')
       .parse(process.argv);
   }
 

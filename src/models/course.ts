@@ -1,6 +1,6 @@
 import { CompositeLearningObject, LearningObject } from './learningobjects';
 import { Topic } from './topic';
-import { findLos, publishLos, publishTemplate, reapLos } from './loutils';
+import { publishLos, reapLos } from './loutils';
 import { copyFileToFolder, getCurrentDirectory, getIgnoreList, writeFile } from '../utils/futils';
 import { CommandOptions } from '../controllers/commands';
 const nunjucks = require('nunjucks');
@@ -25,7 +25,6 @@ export class Course extends CompositeLearningObject {
     this.los = reapLos(this);
     this.lotype = 'course';
     this.reap('course');
-    //  this.link = 'index.html';
     const ignoreList = getIgnoreList();
     if (!options) {
       this.los = this.los.filter(lo => ignoreList.indexOf(lo.folder!) < 0);
