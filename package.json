@@ -13,7 +13,7 @@
     "url": "https://github.com/edeleastar/tutors-js.git"
   },
   "bin": {
-    "tutors-js": "./tutor-js.js"
+    "tutors-js": "./tutors-js.js"
   },
   "dependencies": {
     "@types/lodash": "^4.14.118",
