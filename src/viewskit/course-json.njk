@@ -12,7 +12,7 @@
   {{ video(lo, url) }}
   "summary" : "{{ lo.objectivesMd }}",
   "id": "{{ lo.folder }}",
-  {% if lo.lotype == "pafutils.tsnelvideo" %}
+  {% if lo.lotype == "video" %}
     "route" : "#video/{{ url }}/{{ lo.videoid }}"
   {% elseif lo.lotype == "course" or lo.lotype == "topic"%}
     "route" : "#{{ lo.lotype }}/{{ url }}"
