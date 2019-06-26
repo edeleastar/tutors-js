@@ -33,6 +33,10 @@ export class Course extends CompositeLearningObject {
       this.los = this.los.filter(lo => ignoreList.indexOf(lo.folder!) < 0);
     }
     this.insertCourseRef(this.los);
+    if (this.properties!.courseurl) {
+      let domain = this.properties!.courseurl.substring(this.properties!.courseurl.indexOf('//') + 2);
+      this.properties!.basecourseurl = domain;
+    }
   }
 
   publish(path: string): void {
