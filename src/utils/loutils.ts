@@ -7,7 +7,6 @@ import { LearningObject } from '../models/learningobjects';
 import { Course } from '../models/course';
 import { Topic } from '../models/topic';
 import { Book } from '../models/book';
-import { writeFile } from './futils';
 import { Archive, PanelTalk, Reference, Talk } from '../models/discrete-learningobject';
 import { Git, PanelVideo, Video, Web } from '../models/web-learning-object';
 import { Unit } from '../models/unit';
