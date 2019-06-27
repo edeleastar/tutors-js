@@ -2,7 +2,7 @@ import * as fs from 'fs';
 import * as sh from 'shelljs';
 import * as yaml from 'yamljs';
 import { CompositeLearningObject, LearningObject } from './learningobjects';
-import { publishLos, publishTemplate, reapLos } from '../utils/loutils';
+import { publishLos, reapLos } from '../utils/loutils';
 import { copyFileToFolder, getCurrentDirectory, readPropsFromTree, verifyFolder } from '../utils/futils';
 import { Course } from './course';
 import { CommandOptions } from '../controllers/commands';
@@ -76,7 +76,7 @@ export class Portfolio extends CompositeLearningObject {
         sh.cd(this.homeDir);
       }
     }
-    publishTemplate(absPath, 'index.html', 'portfolio.njk', this);
+    //publishTemplate(absPath, 'index.html', 'portfolio.njk', this);
     publishLos(path, this.los);
     if (this.properties!!.favicon) {
       copyFileToFolder(this.properties!!.favicon, path);
