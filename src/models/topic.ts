@@ -48,11 +48,13 @@ export class Topic extends CompositeLearningObject {
   }
 
   toJson (url: string, jsonObj: any) {
-    super.toJson(url, jsonObj);
+    const topicUrl = `${url}${this.folder}`
+    super.toJson(topicUrl, jsonObj);
+    jsonObj.route =  `#topic/${topicUrl}`
     jsonObj.los = [];
     this.los.forEach(lo => {
       let loJson: any = {};
-      lo.toJson( url + this.folder + '/' + lo.folder, loJson,)
+      lo.toJson( `${topicUrl}/${lo.folder}`, loJson,)
       jsonObj.los.push(loJson);
     });
 

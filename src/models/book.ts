@@ -3,9 +3,17 @@ import * as fs from 'fs';
 const glob = require('glob');
 import { LearningObject } from './learningobjects';
 import * as path from 'path';
-import { copyFolder, getDirectories, getImageFile, initEmptyPath, readFile, readWholeFile, writeFile } from '../utils/futils';
+import {
+  copyFolder,
+  getDirectories,
+  getImageFile,
+  initEmptyPath,
+  initPath,
+  readFile,
+  readWholeFile,
+  writeFile
+} from '../utils/futils';
 import * as sh from 'shelljs';
-const nunjucks = require('nunjucks');
 
 export class Chapter {
   title = '';
@@ -37,7 +45,7 @@ export class Book extends LearningObject {
         file: chapterName,
         title: theTitle,
         shortTitle: chapterName.substring(chapterName.indexOf('.') + 1, chapterName.lastIndexOf('.')),
-        contentMd: JSON.stringify(wholeFile)
+        contentMd: wholeFile
       };
       chapters.push(chapter);
     });
@@ -61,11 +69,32 @@ export class Book extends LearningObject {
   publish(path: string): void {
     sh.cd(this.folder!);
     const labPath = path + '/' + this.folder;
-    initEmptyPath(labPath);
+    initPath(labPath);
     this.directories.forEach(directory => {
       copyFolder(directory, labPath);
     });
-    writeFile(labPath, 'index.json', nunjucks.render('lab-json.njk', { lo: this }));
+
+    let jsonLab: any = {};
+    this.toJsonLab(jsonLab);
+    writeFile(labPath, 'index.json', JSON.stringify(jsonLab));
+
     sh.cd('..');
+  }
+
+  toJsonLab(jsonObj: any) {
+    jsonObj.type = this.lotype;
+    jsonObj.chapters = [];
+    this.chapters.forEach(chapter => {
+      let jsonChapter: any = {};
+      jsonChapter.title = chapter.title;
+      jsonChapter.shortTitle = chapter.shortTitle;
+      jsonChapter.contentMd = chapter.contentMd;
+      jsonObj.chapters.push(jsonChapter);
+    });
+  }
+
+  toJson(url: string, jsonObj: any) {
+    super.toJson(url, jsonObj);
+    jsonObj.route = `#lab/${url}`;
   }
 }

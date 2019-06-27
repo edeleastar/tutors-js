@@ -3,7 +3,6 @@ import { Topic } from './topic';
 import { publishLos, reapLos } from '../utils/loutils';
 import { copyFileToFolder, getCurrentDirectory, getIgnoreList, writeFile } from '../utils/futils';
 import { CommandOptions } from '../controllers/commands';
-const nunjucks = require('nunjucks');
 
 export class Course extends CompositeLearningObject {
   options: CommandOptions;
@@ -41,15 +40,14 @@ export class Course extends CompositeLearningObject {
     }
     copyFileToFolder(this.img!, path);
     publishLos(path, this.los);
-    writeFile(path, 'tutors.json', nunjucks.render('course-json.njk', { lo: this }));
 
     let courseUrl = this.course!.properties!.courseurl;
     let courseJson: any = {};
     this.toJson(courseUrl, courseJson);
-    writeFile(path, 'course.json', JSON.stringify(courseJson));
+    writeFile(path, 'tutors.json', JSON.stringify(courseJson));
   }
 
-  toJson(url: string, jsonObj: any) {;
+  toJson(url: string, jsonObj: any) {
     let baseCourseUrl = url.substring(url.indexOf('//') + 2);
     super.toJson(url, jsonObj);
 

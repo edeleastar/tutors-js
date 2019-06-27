@@ -35,6 +35,11 @@ export class Talk extends DiscreteLearningObject {
       this.videoid = readFile('videoid');
     }
   }
+  toJson(url: string, jsonObj: any) {
+    super.toJson(url, jsonObj);
+    jsonObj.pdf = `https://${url}/${this.link}`;
+    jsonObj.route = `#talk/${url}/${this.link}`;
+  }
 }
 
 export class PanelTalk extends DiscreteLearningObject {
@@ -53,6 +58,11 @@ export class Archive extends DiscreteLearningObject {
     super(parent);
     this.lotype = 'archive';
     this.reap('*.zip');
+  }
+
+  toJson(url: string, jsonObj: any) {
+    super.toJson(url, jsonObj);
+    jsonObj.pdf = `https://${url}/${this.link}`;
   }
 }
 

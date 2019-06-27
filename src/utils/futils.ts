@@ -106,6 +106,10 @@ export function initEmptyPath(path: string): void {
   sh.mkdir('-p', path);
 }
 
+export function initPath(path: string): void {
+  sh.mkdir('-p', path);
+}
+
 export function copyFolder(src: string, dest: string): void {
   sh.mkdir('-p', dest);
   sh.cp('-rf', src, dest);

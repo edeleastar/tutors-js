@@ -12,8 +12,6 @@ export abstract class WebLearningObject extends LearningObject {
 }
 
 export class Video extends WebLearningObject {
-  videoid: string;
-
   constructor(parent: LearningObject) {
     super(parent, 'videoid');
     super.reap('video');
@@ -26,8 +24,6 @@ export class Video extends WebLearningObject {
 }
 
 export class PanelVideo extends WebLearningObject {
-  videoid: string;
-
   constructor(parent: LearningObject) {
     super(parent, 'videoid');
     super.reap('panelvideo');
@@ -41,7 +37,6 @@ export class PanelVideo extends WebLearningObject {
 
 export class Git extends WebLearningObject {
   githubid?: string;
-  videoid?: string;
 
   constructor(parent: LearningObject) {
     super(parent, 'githubid');

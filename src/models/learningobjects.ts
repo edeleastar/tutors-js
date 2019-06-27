@@ -9,7 +9,7 @@ export abstract class LearningObject {
   lotype: string;
   title?: string;
   img?: string;
-  videoid? : string;
+  videoid?: string;
   link?: string;
   folder?: string;
   parentFolder?: string;
@@ -37,7 +37,7 @@ export abstract class LearningObject {
       this.properties = readPropsFromTree();
       //this.jsonProperties = JSON.stringify(this.properties);
     } else {
-     // this.jsonProperties = '{}';
+      // this.jsonProperties = '{}';
     }
     if (fs.existsSync(pattern + '.md')) {
       this.title = getHeader(pattern + '.md');
@@ -54,16 +54,17 @@ export abstract class LearningObject {
 
   abstract publish(path: string): void;
 
-  toJson (url: string, jsonObj: any) {
+  toJson(url: string, jsonObj: any) {
     jsonObj.properties = this.properties;
     jsonObj.title = this.title;
     jsonObj.type = this.lotype;
     jsonObj.summary = this.objectivesMd;
     jsonObj.img = `https://${url}/${this.img}`;
-    if (jsonObj.videoid) {
+    if (this.videoid) {
       jsonObj.video = `#video/${url}/${this.videoid}`;
     }
     jsonObj.id = this.folder;
+    jsonObj.route = this.link;
   }
 }
 

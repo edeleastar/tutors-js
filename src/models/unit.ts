@@ -19,9 +19,13 @@ export class Unit extends Topic {
     sh.cd(this.folder!);
     const topicPath = path + '/' + this.folder;
     copyFileToFolder(this.img!, topicPath);
-
-    //this.topicUrl = this.properties!.courseurl.substring(5) + '/' + this.folder;
     publishLos(topicPath, this.los);
     sh.cd('..');
+  }
+
+  toJson (url: string, jsonObj: any) {
+    url = url.substring(0, url.lastIndexOf('/')) + '/';
+    super.toJson(url, jsonObj);
+    jsonObj.route = `#topic/${url}`;
   }
 }
