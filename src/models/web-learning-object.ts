@@ -18,6 +18,7 @@ export class Video extends WebLearningObject {
     this.lotype = 'video';
     this.videoid = readFile('videoid');
   }
+
   publish(path: string): void {
     copyResource(this.folder!, path);
   }
@@ -30,8 +31,14 @@ export class PanelVideo extends WebLearningObject {
     this.lotype = 'panelvideo';
     this.videoid = readFile('videoid');
   }
+
   publish(path: string): void {
     copyResource(this.folder!, path);
+  }
+
+  toJson(url: string, jsonObj: any) {
+    super.toJson(url, jsonObj);
+    jsonObj.route = `#video/${url}/${this.link}`;
   }
 }
 
