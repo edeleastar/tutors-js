@@ -19,6 +19,9 @@ export abstract class DiscreteLearningObject extends LearningObject {
       super.reap(resourceName);
       this.link = resourceList[0];
     }
+    if (fs.existsSync('videoid')) {
+      this.videoid = readFile('videoid');
+    }
   }
 
   publish(path: string): void {
@@ -31,9 +34,6 @@ export class Talk extends DiscreteLearningObject {
     super(parent);
     this.lotype = 'talk';
     this.reap('*.pdf');
-    if (fs.existsSync('videoid')) {
-      this.videoid = readFile('videoid');
-    }
   }
   toJson(url: string, jsonObj: any) {
     super.toJson(url, jsonObj);
@@ -47,9 +47,6 @@ export class PanelTalk extends DiscreteLearningObject {
     super(parent);
     this.lotype = 'paneltalk';
     this.reap('*.pdf');
-    if (fs.existsSync('videoid')) {
-      this.videoid = readFile('videoid');
-    }
   }
   toJson(url: string, jsonObj: any) {
     super.toJson(url, jsonObj);
@@ -68,13 +65,5 @@ export class Archive extends DiscreteLearningObject {
   toJson(url: string, jsonObj: any) {
     super.toJson(url, jsonObj);
     jsonObj.pdf = `https://${url}/${this.link}`;
-  }
-}
-
-export class Reference extends DiscreteLearningObject {
-  constructor(parent: LearningObject) {
-    super(parent);
-    this.lotype = 'reference';
-    this.reap('*.pdf');
   }
 }
