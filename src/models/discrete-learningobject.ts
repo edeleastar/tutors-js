@@ -64,6 +64,6 @@ export class Archive extends DiscreteLearningObject {
 
   toJson(url: string, jsonObj: any) {
     super.toJson(url, jsonObj);
-    jsonObj.pdf = `https://${url}/${this.link}`;
+    jsonObj.route = `https://${url}/${this.link}`;
   }
 }

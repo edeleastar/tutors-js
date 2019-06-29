@@ -3,15 +3,8 @@ import { CompositeLearningObject, LearningObject } from './learningobjects';
 import { publishLos, reapLos } from '../utils/loutils';
 import { copyFileToFolder } from '../utils/futils';
 import * as fs from 'fs';
-import { Unit } from './unit';
 
 export class Topic extends CompositeLearningObject {
-  units: Array<LearningObject>;
-  panelVideos: Array<LearningObject>;
-  panelTalks: Array<LearningObject>;
-  standardLos: Array<LearningObject>;
-  allLos: LearningObject[] = [];
-
   constructor(parent: LearningObject) {
     super(parent);
     super.los = reapLos(this);
@@ -19,13 +12,6 @@ export class Topic extends CompositeLearningObject {
     this.link = 'index.html';
     this.lotype = 'topic';
     this.setDefaultImage();
-
-    this.los.forEach(lo => this.allLos.push(lo));
-
-    this.units = this.los.filter(lo => lo.lotype == 'unit');
-    this.panelVideos = this.los.filter(lo => lo.lotype == 'panelvideo');
-    this.panelTalks = this.los.filter(lo => lo.lotype == 'paneltalk');
-    this.standardLos = this.los.filter(lo => lo.lotype !== 'unit' && lo.lotype !== 'panelvideo' && lo.lotype !== 'paneltalk');
   }
 
   setDefaultImage(): void {
@@ -42,21 +28,19 @@ export class Topic extends CompositeLearningObject {
     sh.cd(this.folder!);
     const topicPath = path + '/' + this.folder;
     copyFileToFolder(this.img!, topicPath);
-
     publishLos(topicPath, this.los);
     sh.cd('..');
   }
 
-  toJson (url: string, jsonObj: any) {
-    const topicUrl = `${url}${this.folder}`
+  toJson(url: string, jsonObj: any) {
+    const topicUrl = `${url}${this.folder}`;
     super.toJson(topicUrl, jsonObj);
-    jsonObj.route =  `#topic/${topicUrl}`
+    jsonObj.route = `#topic/${topicUrl}`;
     jsonObj.los = [];
     this.los.forEach(lo => {
       let loJson: any = {};
-      lo.toJson( `${topicUrl}/${lo.folder}`, loJson,)
+      lo.toJson(`${topicUrl}/${lo.folder}`, loJson);
       jsonObj.los.push(loJson);
     });
-
   }
 }

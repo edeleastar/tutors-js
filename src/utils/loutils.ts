@@ -7,7 +7,7 @@ import { LearningObject } from '../models/learningobjects';
 import { Course } from '../models/course';
 import { Topic } from '../models/topic';
 import { Book } from '../models/book';
-import { Archive, PanelTalk, Reference, Talk } from '../models/discrete-learningobject';
+import { Archive, PanelTalk, Talk } from '../models/discrete-learningobject';
 import { Git, PanelVideo, Video, Web } from '../models/web-learning-object';
 import { Unit } from '../models/unit';
 
@@ -58,11 +58,6 @@ export function reapLos(parent: LearningObject): Array<LearningObject> {
   los = los.concat(
     reapLoType('github*', parent, parent => {
       return new Git(parent);
-    })
-  );
-  los = los.concat(
-    reapLoType('reference*', parent, parent => {
-      return new Reference(parent);
     })
   );
   los = los.concat(
