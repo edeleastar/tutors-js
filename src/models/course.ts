@@ -49,7 +49,7 @@ export class Course extends CompositeLearningObject {
 
   toJson(url: string, jsonObj: any) {
     let baseCourseUrl = url.substring(url.indexOf('//') + 2);
-    super.toJson(url, jsonObj);
+    super.toJson(baseCourseUrl, jsonObj);
 
     jsonObj.los = [];
     this.los.forEach(lo => {
