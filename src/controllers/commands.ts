@@ -5,6 +5,7 @@ import { newCommand } from './newcommand';
 import { CompositeLearningObject } from '../models/learningobjects';
 import { Portfolio } from '../models/portfolio';
 import { Course } from '../models/course';
+import { generateNetlifyToml } from './netlify';
 
 export interface CommandOptions {
   version: string;
@@ -33,8 +34,6 @@ export class Commands {
     program
       .arguments('<file>')
       .version(require('../../package.json').version)
-      .option('-p, --private', 'Generate full private site')
-      .option('-n, --new', 'Create a template course')
       .parse(process.argv);
   }
 
@@ -47,11 +46,9 @@ export class Commands {
     } else {
       const rootLearningObject = createRoot(options);
       if (rootLearningObject) {
-        let site = 'public-site-uk';
-        if (options.private) {
-          site = 'private-site-uk';
-        }
+        let site = 'json';
         rootLearningObject.publish(site);
+        generateNetlifyToml(site)
       } else {
         console.log('Cannot locate course.md or portfolio.yaml. Change to course folder and try again. ');
       }
