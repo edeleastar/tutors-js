@@ -3,7 +3,7 @@ import * as sh from 'shelljs';
 import * as yaml from 'yamljs';
 import { CompositeLearningObject, LearningObject } from './learningobjects';
 import { publishLos, reapLos } from '../utils/loutils';
-import { copyFileToFolder, getCurrentDirectory, readPropsFromTree, verifyFolder } from '../utils/futils';
+import { copyFileToFolder, getCurrentDirectory, readPropsFromTree, verifyFolder, writeFile } from '../utils/futils';
 import { Course } from './course';
 import { CommandOptions } from '../controllers/commands';
 
@@ -38,7 +38,7 @@ export class Portfolio extends CompositeLearningObject {
     yamlData.courseGroups.forEach((courseGroup: CourseGroup) => {
       courseGroup.courses = new Array<Course>();
       if (courseGroup.outline) {
-        //courseGroup.description = parse(courseGroup.outline);
+        courseGroup.description = courseGroup.outline;
       }
       if (courseGroup.modules) {
         courseGroup.modules.forEach((module: string) => {
@@ -86,5 +86,10 @@ export class Portfolio extends CompositeLearningObject {
     }
 
     copyFileToFolder('favicon.ico', absPath);
+
+    let courseUrl = this.properties!.courseurl;
+    let courseJson: any = {};
+    this.toJson(courseUrl, courseJson);
+    writeFile(path, 'tutors.json', JSON.stringify(courseJson));
   }
 }
