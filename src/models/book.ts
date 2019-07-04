@@ -96,5 +96,8 @@ export class Book extends LearningObject {
   toJson(url: string, jsonObj: any) {
     super.toJson(url, jsonObj);
     jsonObj.route = `#lab/${url}`;
+    let labJson: any = {};
+    this.toJsonLab(labJson)
+    jsonObj.lo = labJson;
   }
 }

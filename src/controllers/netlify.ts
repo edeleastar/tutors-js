@@ -1,4 +1,4 @@
-import * as fs from "fs";
+import * as fs from 'fs';
 import { writeFile } from '../utils/futils';
 
 const netlify = `#
@@ -14,9 +14,8 @@ const netlify = `#
   for = "/*"
     [headers.values]
     Access-Control-Allow-Origin = "*"
-`
+`;
 
-
-export function generateNetlifyToml(site:string) {
-  writeFile (site, "netlify.toml", netlify)
+export function generateNetlifyToml(site: string) {
+  writeFile(site, 'netlify.toml', netlify);
 }
