@@ -1,5 +1,6 @@
 import * as fs from 'fs';
 import { writeFile } from '../utils/futils';
+const version = require('../../package.json').version
 
 const netlifyToml = `#
 # The following redirect is intended for use with most SPAs that handle
@@ -16,7 +17,7 @@ const netlifyToml = `#
     Access-Control-Allow-Origin = "*"
 `;
 
-function redirectHtmlFile(url: string): string {
+function redirectHtmlFile(version: string): string {
   const netlifyHtml = `
 <!DOCTYPE html>
 <html>
@@ -40,15 +41,23 @@ function redirectHtmlFile(url: string): string {
           <div class="uk-width-expand@m uk-text-left">
             <div class="uk-heading-small">Tutors</div>
             <div class="uk-text-muted uk-text-small">
-              Tuition System created by Eamonn de Leastar.
+              Tuition System ${version} created by Eamonn de Leastar.
             </div>
             <div class="uk-text">
-              Course deployed here: <a href="https://tutors.design/course/${url}"> https://tutors.design/course/${url} </a>
+              <p id="site"></p>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <script>
+      var url = window.location.href;
+      var baseUrl = url.substring(url.indexOf('//') + 2);
+      var array = baseUrl.split('/');
+      array.pop();
+      var tutorsUrl = array.join('/');
+      document.getElementById("site").innerHTML = 'Course deployed here: <a href="https://tutors.design/course/' + tutorsUrl + '"> https://tutors.design/course/'  + tutorsUrl;
+    </script>
   </body>
 </html>
 `;
@@ -57,7 +66,8 @@ function redirectHtmlFile(url: string): string {
 }
 
 export function generateNetlifyToml(site: string, url: string) {
+
   writeFile(site, 'netlify.toml', netlifyToml);
-  let baseCourseUrl = url.substring(url.indexOf('//') + 2);
-  writeFile(site, 'index.html', redirectHtmlFile(baseCourseUrl));
+  let baseCourseUrl = '';
+  writeFile(site, 'index.html', redirectHtmlFile(version));
 }
