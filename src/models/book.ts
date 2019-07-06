@@ -19,6 +19,7 @@ export class Chapter {
   title = '';
   shortTitle = '';
   contentMd = '';
+  route = '';
 }
 
 export class Book extends LearningObject {
@@ -45,7 +46,8 @@ export class Book extends LearningObject {
         file: chapterName,
         title: theTitle,
         shortTitle: chapterName.substring(chapterName.indexOf('.') + 1, chapterName.lastIndexOf('.')),
-        contentMd: wholeFile
+        contentMd: wholeFile,
+        route:''
       };
       chapters.push(chapter);
     });
@@ -75,13 +77,13 @@ export class Book extends LearningObject {
     });
 
     let jsonLab: any = {};
-    this.toJsonLab(jsonLab);
+    this.toJsonLab(jsonLab, labPath);
     writeFile(labPath, 'index.json', JSON.stringify(jsonLab));
 
     sh.cd('..');
   }
-
-  toJsonLab(jsonObj: any) {
+  
+  toJsonLab(jsonObj: any, url:string) {
     jsonObj.type = this.lotype;
     jsonObj.chapters = [];
     this.chapters.forEach(chapter => {
@@ -89,6 +91,7 @@ export class Book extends LearningObject {
       jsonChapter.title = chapter.title;
       jsonChapter.shortTitle = chapter.shortTitle;
       jsonChapter.contentMd = chapter.contentMd;
+      jsonChapter.route = `${url}/${chapter.shortTitle}`;
       jsonObj.chapters.push(jsonChapter);
     });
   }
@@ -96,8 +99,18 @@ export class Book extends LearningObject {
   toJson(url: string, jsonObj: any) {
     super.toJson(url, jsonObj);
     jsonObj.route = `#lab/${url}`;
-    let labJson: any = {};
-    this.toJsonLab(labJson)
-    jsonObj.lo = labJson;
+    // let labJson: any = {};
+    // this.toJsonLab(labJson, jsonObj.route)
+    // jsonObj.lo = labJson;
+    jsonObj.los = [];
+    this.chapters.forEach(chapter => {
+      let jsonChapter: any = {};
+      jsonChapter.title = chapter.title;
+      jsonChapter.shortTitle = chapter.shortTitle;
+      jsonChapter.contentMd = chapter.contentMd;
+      jsonChapter.route = `${jsonObj.route}/${chapter.shortTitle}`;
+      jsonObj.los.push(jsonChapter);
+    });
+
   }
 }

@@ -44,17 +44,18 @@ export class Course extends CompositeLearningObject {
     let courseUrl = this.course!.properties!.courseurl;
     let courseJson: any = {};
     this.toJson(courseUrl, courseJson);
+    this.toJson('{{COURSEURL}}/', courseJson);
     writeFile(path, 'tutors.json', JSON.stringify(courseJson, null,2));
   }
 
   toJson(url: string, jsonObj: any) {
-    let baseCourseUrl = url.substring(url.indexOf('//') + 2);
-    super.toJson(baseCourseUrl, jsonObj);
+    //let baseCourseUrl = url.substring(url.indexOf('//') + 2);
+    super.toJson(url, jsonObj);
 
     jsonObj.los = [];
     this.los.forEach(lo => {
       let topicObj: any = {};
-      lo.toJson(baseCourseUrl, topicObj);
+      lo.toJson(url, topicObj);
       jsonObj.los.push(topicObj);
     });
   }

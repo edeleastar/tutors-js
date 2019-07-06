@@ -2,7 +2,8 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as sh from 'shelljs';
 import { Properties } from './properties';
-import * as yaml from 'yamljs';
+//import * as yaml from 'yamljs';
+import * as yaml from 'js-yaml';
 
 const _ = require('lodash');
 sh.config.silent = true;
@@ -130,9 +131,9 @@ export function getIgnoreList(): string[] {
 }
 
 function readYaml(path: string): Properties {
-  const properties = new Properties();
-  const yamlData = yaml.load(path);
-  _.defaults(yamlData, properties);
+  //const properties = new Properties();
+  const yamlData = yaml.safeLoad(fs.readFileSync(path, 'utf8'));
+ // _.defaults(yamlData, properties);
   return yamlData;
 }
 
