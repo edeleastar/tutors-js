@@ -48,7 +48,7 @@ export class Commands {
       if (rootLearningObject) {
         let site = 'json';
         rootLearningObject.publish(site);
-        generateNetlifyToml(site)
+        generateNetlifyToml(site, rootLearningObject.properties!.courseurl)
       } else {
         console.log('Cannot locate course.md or portfolio.yaml. Change to course folder and try again. ');
       }
