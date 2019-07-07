@@ -1,7 +1,7 @@
 import { CompositeLearningObject, LearningObject } from './learningobjects';
 import { Topic } from './topic';
 import { publishLos, reapLos } from '../utils/loutils';
-import { copyFileToFolder, getCurrentDirectory, getIgnoreList, writeFile } from '../utils/futils';
+import { copyFileToFolder, getCurrentDirectory, writeFile } from '../utils/futils';
 import { CommandOptions } from '../controllers/commands';
 
 export class Course extends CompositeLearningObject {
@@ -24,12 +24,11 @@ export class Course extends CompositeLearningObject {
     this.los = reapLos(this);
     this.lotype = 'course';
     this.reap('course');
-    const ignoreList = getIgnoreList();
-    if (!options) {
-      this.los = this.los.filter(lo => ignoreList.indexOf(lo.folder!) < 0);
-    } else if (!options.private) {
-      this.los = this.los.filter(lo => ignoreList.indexOf(lo.folder!) < 0);
-    }
+    const ignoreList = this.properties!.ignore;
+    const los = this.los.filter(lo => ignoreList.indexOf(lo.folder!) >= 0);
+    los.forEach(lo => {
+      lo.hide = true;
+    });
     this.insertCourseRef(this.los);
   }
 
@@ -45,7 +44,7 @@ export class Course extends CompositeLearningObject {
     let courseJson: any = {};
     this.toJson(courseUrl, courseJson);
     this.toJson('{{COURSEURL}}/', courseJson);
-    writeFile(path, 'tutors.json', JSON.stringify(courseJson, null,2));
+    writeFile(path, 'tutors.json', JSON.stringify(courseJson, null, 2));
   }
 
   toJson(url: string, jsonObj: any) {

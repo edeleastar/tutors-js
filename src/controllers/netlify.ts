@@ -37,14 +37,25 @@ function redirectHtmlFile(version: string): string {
         <div uk-grid>
           <div class="uk-width-1-5@m">
             <i class="fas fa-chalkboard-teacher fa-4x"></i>
+              <div class="uk-text-muted uk-text-small">
+                ${version}
+              </div>
           </div>
           <div class="uk-width-expand@m uk-text-left">
             <div class="uk-heading-small">Tutors</div>
-            <div class="uk-text-muted uk-text-small">
-              Tuition System ${version} created by Eamonn de Leastar.
-            </div>
             <div class="uk-text">
-              <p id="site"></p>
+              <p> Public Course deployed here: </p>
+              <ul class="uk-list uk-list-bullet">
+                <li id="site"></li>
+              </ul>
+              <p> Private Course deployed here: </p>
+              <ul class="uk-list uk-list-bullet">
+                <li id="privatesite"></li>
+              </ul>              
+              <p> Private site includes topics named in ignore list in properties.yaml. See example here:</p>
+              <ul class="uk-list uk-list-bullet">
+                <li><a href="https://github.com/wit-tutors/tutors-starter/blob/master/properties.yaml">properties.yaml</p></li>
+               </ul>
             </div>
           </div>
         </div>
@@ -56,7 +67,10 @@ function redirectHtmlFile(version: string): string {
       var array = baseUrl.split('/');
       array.pop();
       var tutorsUrl = array.join('/');
-      document.getElementById("site").innerHTML = 'Course deployed here: <a href="https://tutors.design/course/' + tutorsUrl + '"> https://tutors.design/course/'  + tutorsUrl;
+      document.getElementById("site").innerHTML = '<a href="https://tutors.design/course/' + tutorsUrl + '"> https://tutors.design/course/'  + tutorsUrl;
+      tutorsUrl = tutorsUrl + '?complete'
+      document.getElementById("privatesite").innerHTML = '<a href="https://tutors.design/course/' + tutorsUrl + '"> https://tutors.design/course/'  + tutorsUrl;
+
     </script>
   </body>
 </html>

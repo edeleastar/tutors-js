@@ -2,8 +2,8 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as sh from 'shelljs';
 import { Properties } from './properties';
-//import * as yaml from 'yamljs';
 import * as yaml from 'js-yaml';
+const version = require('../../package.json').version;
 
 const _ = require('lodash');
 sh.config.silent = true;
@@ -116,47 +116,20 @@ export function copyFolder(src: string, dest: string): void {
   sh.cp('-rf', src, dest);
 }
 
-export function getIgnoreList(): string[] {
-  const ignoreList: string[] = [];
-  if (fs.existsSync('mbignore')) {
-    const array = fs
-      .readFileSync('mbignore')
-      .toString()
-      .split('\n');
-    for (let i = 0; i < array.length; i++) {
-      ignoreList[i] = array[i].trim();
-    }
+export function readYaml(path: string): Properties {
+  let yamlData = null;
+  try {
+    yamlData = yaml.safeLoad(fs.readFileSync(path, 'utf8'));
+  } catch (err) {
+    console.log(`Tutors ${version} encountered an error reading properties.yaml:`)
+    console.log('--------------------------------------------------------------')
+    console.log(err.mark.buffer);
+    console.log('--------------------------------------------------------------')
+    console.log(err.message);
+    console.log ('Review this file and try again....');
+    sh.exit(1);
   }
-  return ignoreList;
-}
-
-function readYaml(path: string): Properties {
-  //const properties = new Properties();
-  const yamlData = yaml.safeLoad(fs.readFileSync(path, 'utf8'));
- // _.defaults(yamlData, properties);
   return yamlData;
-}
-
-export function readPropsFromTree(): Properties {
-  let properties = new Properties();
-  let path = 'properties.yaml';
-  for (let i = 0; i < 5; i++) {
-    if (fs.existsSync(path)) {
-      const yamlData = readYaml(path);
-      _.defaults(properties, yamlData);
-      path = '../' + path;
-    } else {
-      path = '../' + path;
-    }
-  }
-
-  if (!properties.courseurl) {
-    properties.courseurl = readFileFromTree('courseurl');
-  }
-  if (properties.courseurl && properties.courseurl[properties.courseurl.length - 1] != '/') {
-    properties.courseurl += '/';
-  }
-  return properties;
 }
 
 export function getHeader(fileName: string): string {

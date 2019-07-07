@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import { getHeader, getImageFile, getParentFolder, readPropsFromTree, withoutHeader } from '../utils/futils';
+import { getHeader, getImageFile, getParentFolder, readYaml, withoutHeader } from '../utils/futils';
 import { Properties } from '../utils/properties';
 
 export abstract class LearningObject {
@@ -14,6 +14,7 @@ export abstract class LearningObject {
   folder?: string;
   parentFolder?: string;
   objectivesMd?: string;
+  hide = false;
   properties?: Properties;
 
   protected constructor(parent?: LearningObject) {
@@ -28,7 +29,7 @@ export abstract class LearningObject {
     this.parentFolder = getParentFolder();
     this.img = getImageFile(pattern);
     if (fs.existsSync('properties.yaml')) {
-      this.properties = readPropsFromTree();
+      this.properties = readYaml('properties.yaml')
     }
     if (fs.existsSync(pattern + '.md')) {
       this.title = getHeader(pattern + '.md');
@@ -53,6 +54,7 @@ export abstract class LearningObject {
     }
     jsonObj.id = this.folder;
     jsonObj.route = this.link;
+    jsonObj.hide = this.hide;
   }
 }
 

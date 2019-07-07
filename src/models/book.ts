@@ -3,16 +3,7 @@ import * as fs from 'fs';
 const glob = require('glob');
 import { LearningObject } from './learningobjects';
 import * as path from 'path';
-import {
-  copyFolder,
-  getDirectories,
-  getImageFile,
-  initEmptyPath,
-  initPath,
-  readFile,
-  readWholeFile,
-  writeFile
-} from '../utils/futils';
+import { copyFolder, getDirectories, getImageFile, initPath, readFile, readWholeFile } from '../utils/futils';
 import * as sh from 'shelljs';
 
 export class Chapter {
@@ -47,7 +38,7 @@ export class Book extends LearningObject {
         title: theTitle,
         shortTitle: chapterName.substring(chapterName.indexOf('.') + 1, chapterName.lastIndexOf('.')),
         contentMd: wholeFile,
-        route:''
+        route: ''
       };
       chapters.push(chapter);
     });
@@ -75,33 +66,12 @@ export class Book extends LearningObject {
     this.directories.forEach(directory => {
       copyFolder(directory, labPath);
     });
-
-    let jsonLab: any = {};
-    this.toJsonLab(jsonLab, labPath);
-    writeFile(labPath, 'index.json', JSON.stringify(jsonLab));
-
     sh.cd('..');
-  }
-  
-  toJsonLab(jsonObj: any, url:string) {
-    jsonObj.type = this.lotype;
-    jsonObj.chapters = [];
-    this.chapters.forEach(chapter => {
-      let jsonChapter: any = {};
-      jsonChapter.title = chapter.title;
-      jsonChapter.shortTitle = chapter.shortTitle;
-      jsonChapter.contentMd = chapter.contentMd;
-      jsonChapter.route = `${url}/${chapter.shortTitle}`;
-      jsonObj.chapters.push(jsonChapter);
-    });
   }
 
   toJson(url: string, jsonObj: any) {
     super.toJson(url, jsonObj);
     jsonObj.route = `#lab/${url}`;
-    // let labJson: any = {};
-    // this.toJsonLab(labJson, jsonObj.route)
-    // jsonObj.lo = labJson;
     jsonObj.los = [];
     this.chapters.forEach(chapter => {
       let jsonChapter: any = {};
@@ -111,6 +81,5 @@ export class Book extends LearningObject {
       jsonChapter.route = `${jsonObj.route}/${chapter.shortTitle}`;
       jsonObj.los.push(jsonChapter);
     });
-
   }
 }
