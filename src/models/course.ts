@@ -25,10 +25,12 @@ export class Course extends CompositeLearningObject {
     this.lotype = 'course';
     this.reap('course');
     const ignoreList = this.properties!.ignore;
-    const los = this.los.filter(lo => ignoreList.indexOf(lo.folder!) >= 0);
-    los.forEach(lo => {
-      lo.hide = true;
-    });
+    if (ignoreList) {
+      const los = this.los.filter(lo => ignoreList.indexOf(lo.folder!) >= 0);
+      los.forEach(lo => {
+        lo.hide = true;
+      });
+    }
     this.insertCourseRef(this.los);
   }
 

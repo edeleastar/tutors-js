@@ -68,9 +68,7 @@ function redirectHtmlFile(version: string): string {
       array.pop();
       var tutorsUrl = array.join('/');
       document.getElementById("site").innerHTML = '<a href="https://tutors.design/course/' + tutorsUrl + '"> https://tutors.design/course/'  + tutorsUrl;
-      tutorsUrl = tutorsUrl + '?complete'
-      document.getElementById("privatesite").innerHTML = '<a href="https://tutors.design/course/' + tutorsUrl + '"> https://tutors.design/course/'  + tutorsUrl;
-
+      document.getElementById("privatesite").innerHTML = '<a href="https://wit-tutors.github.io/#course/' + tutorsUrl + '"> https://wit-tutors.github.io/#course/'  + tutorsUrl;
     </script>
   </body>
 </html>
