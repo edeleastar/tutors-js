@@ -42,9 +42,7 @@ export class Course extends CompositeLearningObject {
     copyFileToFolder(this.img!, path);
     publishLos(path, this.los);
 
-    let courseUrl = this.course!.properties!.courseurl;
     let courseJson: any = {};
-    this.toJson(courseUrl, courseJson);
     this.toJson('{{COURSEURL}}/', courseJson);
     writeFile(path, 'tutors.json', JSON.stringify(courseJson, null, 2));
   }

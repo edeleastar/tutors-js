@@ -1,6 +1,5 @@
 import * as fs from 'fs';
 import * as sh from 'shelljs';
-import * as yaml from 'yamljs';
 import { CompositeLearningObject, LearningObject } from './learningobjects';
 import { publishLos, reapLos } from '../utils/loutils';
 import { copyFileToFolder, getCurrentDirectory, verifyFolder, writeFile } from '../utils/futils';
