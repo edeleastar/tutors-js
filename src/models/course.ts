@@ -3,6 +3,7 @@ import { Topic } from './topic';
 import { publishLos, reapLos } from '../utils/loutils';
 import { copyFileToFolder, getCurrentDirectory, writeFile } from '../utils/futils';
 import { CommandOptions } from '../controllers/commands';
+const version = require('../../package.json').version;
 
 export class Course extends CompositeLearningObject {
   options: CommandOptions;
@@ -44,13 +45,13 @@ export class Course extends CompositeLearningObject {
 
     let courseJson: any = {};
     this.toJson('{{COURSEURL}}/', courseJson);
-    writeFile(path, 'tutors.json', JSON.stringify(courseJson, null, 2));
+    //writeFile(path, 'tutors.json', JSON.stringify(courseJson, null, 2));
+    writeFile(path, 'tutors.json', JSON.stringify(courseJson));
   }
 
   toJson(url: string, jsonObj: any) {
-    //let baseCourseUrl = url.substring(url.indexOf('//') + 2);
     super.toJson(url, jsonObj);
-
+    jsonObj.version = version;
     jsonObj.los = [];
     this.los.forEach(lo => {
       let topicObj: any = {};
