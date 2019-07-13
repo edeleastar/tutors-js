@@ -69,6 +69,7 @@ function redirectHtmlFile(version: string): string {
       var tutorsUrl = array.join('/');
       document.getElementById("site").innerHTML = '<a href="https://tutors.design/course/' + tutorsUrl + '"> https://tutors.design/course/'  + tutorsUrl;
       document.getElementById("privatesite").innerHTML = '<a href="https://tutors-design.netlify.com/#course/' + tutorsUrl + '"> https://tutors-design.netlify.com/#course/'  + tutorsUrl;
+      window.location("https://tutors.design/course/' + tutorsUrl + '");
     </script>
   </body>
 </html>
