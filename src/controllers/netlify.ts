@@ -1,6 +1,5 @@
-import * as fs from 'fs';
 import { writeFile } from '../utils/futils';
-const version = require('../../package.json').version
+const version = require('../../package.json').version;
 
 const netlifyToml = `#
 # The following redirect is intended for use with most SPAs that handle
@@ -19,67 +18,28 @@ const netlifyToml = `#
 
 function redirectHtmlFile(version: string): string {
   const netlifyHtml = `
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title> Tutors Reader </title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans' type='text/css'>
-    <script src="https://use.fontawesome.com/releases/v5.8.2/js/all.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.1.5/css/uikit.min.css" rel="stylesheet"/>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.1.5/js/uikit.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.1.5/js/uikit-icons.min.js"></script>
-  </head>
-  <body>
-    <div class="uk-flex uk-flex-center uk-flex-middle uk-text-center uk-container-expand uk-padding-small" uk-grid>
-      <div class="uk-width-3-4@m  uk-card uk-card-default uk-padding-small">
-        <div uk-grid>
-          <div class="uk-width-1-5@m">
-            <i class="fas fa-chalkboard-teacher fa-4x"></i>
-              <div class="uk-text-muted uk-text-small">
-                ${version}
-              </div>
-          </div>
-          <div class="uk-width-expand@m uk-text-left">
-            <div class="uk-heading-small">Tutors</div>
-            <div class="uk-text">
-              <p> Public Course deployed here: </p>
-              <ul class="uk-list uk-list-bullet">
-                <li id="site"></li>
-              </ul>
-              <p> Private Course deployed here: </p>
-              <ul class="uk-list uk-list-bullet">
-                <li id="privatesite"></li>
-              </ul>              
-              <p> Private site includes topics named in ignore list in properties.yaml. See example here:</p>
-              <ul class="uk-list uk-list-bullet">
-                <li><a href="https://github.com/wit-tutors/tutors-starter/blob/master/properties.yaml">properties.yaml</p></li>
-               </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <script>
-      var url = window.location.href;
-      var baseUrl = url.substring(url.indexOf('//') + 2);
-      var array = baseUrl.split('/');
-      array.pop();
-      var tutorsUrl = array.join('/');
-      document.getElementById("site").innerHTML = '<a href="https://tutors.design/course/' + tutorsUrl + '"> https://tutors.design/course/'  + tutorsUrl;
-      document.getElementById("privatesite").innerHTML = '<a href="https://tutors-design.netlify.com/#course/' + tutorsUrl + '"> https://tutors-design.netlify.com/#course/'  + tutorsUrl;
-      window.location("https://tutors.design/course/' + tutorsUrl + '");
-    </script>
-  </body>
-</html>
-`;
-
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <meta charset="utf-8">
+        <title> Tutors Reader </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+      </head>
+      <body>
+        <script>
+          var url = window.location.href;
+          var baseUrl = url.substring(url.indexOf('//') + 2);
+          var array = baseUrl.split('/');
+          array.pop();
+          var tutorsUrl = array.join('/');
+          window.location = "https://tutors.design/course/" + tutorsUrl;
+        </script>
+      </body>
+    </html>`;
   return netlifyHtml;
 }
 
 export function generateNetlifyToml(site: string, url: string) {
-
   writeFile(site, 'netlify.toml', netlifyToml);
   let baseCourseUrl = '';
   writeFile(site, 'index.html', redirectHtmlFile(version));
