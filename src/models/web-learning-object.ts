@@ -67,6 +67,9 @@ export class Web extends WebLearningObject {
     super(parent, 'weburl');
     super.reap('web');
     this.lotype = 'web';
+    if (fs.existsSync('videoid')) {
+      this.videoid = readFile('videoid');
+    }
   }
 
   publish(path: string): void {
