@@ -1,12 +1,15 @@
 import { CompositeLearningObject, LearningObject } from './learningobjects';
 import { Topic } from './topic';
 import { publishLos, reapLos } from '../utils/loutils';
-import { copyFileToFolder, getCurrentDirectory, writeFile } from '../utils/futils';
+import { copyFileToFolder, getCurrentDirectory, readYaml, writeFile } from '../utils/futils';
 import { CommandOptions } from '../controllers/commands';
+import { Properties } from '../utils/properties';
+import * as fs from 'fs';
 const version = require('../../package.json').version;
 
 export class Course extends CompositeLearningObject {
   options: CommandOptions;
+  enrollment?: Properties;
 
   insertCourseRef(los: Array<LearningObject>): void {
     los.forEach(lo => {
@@ -33,6 +36,9 @@ export class Course extends CompositeLearningObject {
       });
     }
     this.insertCourseRef(this.los);
+    if (fs.existsSync('enrollment.yaml')) {
+      this.enrollment = readYaml('enrollment.yaml');
+    }
   }
 
   publish(path: string): void {
@@ -45,7 +51,6 @@ export class Course extends CompositeLearningObject {
 
     let courseJson: any = {};
     this.toJson('{{COURSEURL}}/', courseJson);
-    //writeFile(path, 'tutors.json', JSON.stringify(courseJson, null, 2));
     writeFile(path, 'tutors.json', JSON.stringify(courseJson));
   }
 
@@ -58,5 +63,6 @@ export class Course extends CompositeLearningObject {
       lo.toJson(url, topicObj);
       jsonObj.los.push(topicObj);
     });
+    jsonObj.enrollment = this.enrollment;
   }
 }
