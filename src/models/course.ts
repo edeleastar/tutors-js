@@ -1,7 +1,7 @@
 import { CompositeLearningObject, LearningObject } from './learningobjects';
 import { Topic } from './topic';
 import { publishLos, reapLos } from '../utils/loutils';
-import { copyFileToFolder, getCurrentDirectory, readYaml, writeFile } from '../utils/futils';
+import { copyFileToFolder, getCurrentDirectory, readEnrollment, readYaml, writeFile } from '../utils/futils';
 import { CommandOptions } from '../controllers/commands';
 import { Properties } from '../utils/properties';
 import * as fs from 'fs';
@@ -37,7 +37,10 @@ export class Course extends CompositeLearningObject {
     }
     this.insertCourseRef(this.los);
     if (fs.existsSync('enrollment.yaml')) {
-      this.enrollment = readYaml('enrollment.yaml');
+      this.enrollment = readEnrollment('enrollment.yaml');
+      if (this.enrollment) {
+        console.log(`Enrolment file detected with ${this.enrollment.students.length} students`);
+      }
     }
   }
 

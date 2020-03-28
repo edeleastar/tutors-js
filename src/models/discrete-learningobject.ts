@@ -18,6 +18,11 @@ export abstract class DiscreteLearningObject extends LearningObject {
       const resourceName = path.parse(resourceList[0]).name;
       super.reap(resourceName);
       this.link = resourceList[0];
+    } else {
+      resourceList = glob.sync("*.md").sort();
+      const resourceName = path.parse(resourceList[0]).name;
+      super.reap(resourceName);
+      this.link = resourceList[0];
     }
     if (fs.existsSync('videoid')) {
       this.videoid = readFile('videoid');

@@ -132,6 +132,23 @@ export function readYaml(path: string): Properties {
   return yamlData;
 }
 
+export function readEnrollment(path: string): Properties {
+  let yamlData = null;
+  try {
+    yamlData = yaml.safeLoad(fs.readFileSync(path, 'utf8'));
+  } catch (err) {
+    console.log(`Tutors ${version} encountered an error reading Enrolment file:`)
+    console.log('--------------------------------------------------------------')
+    console.log(err.mark.buffer);
+    console.log('--------------------------------------------------------------')
+    console.log(err.message);
+    console.log ('Ignoring the enrolment file for the moment...');
+  }
+  return yamlData;
+}
+
+
+
 export function getHeader(fileName: string): string {
   let header = '';
   let array = fs
