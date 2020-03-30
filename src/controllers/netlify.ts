@@ -32,7 +32,7 @@ function redirectHtmlFile(version: string): string {
           var array = baseUrl.split('/');
           array.pop();
           var tutorsUrl = array.join('/');
-          window.location = "https://tutors.design/course/" + tutorsUrl;
+          window.location = "https://tutors-design.netlify.com/course/" + tutorsUrl;
         </script>
       </body>
     </html>`;
